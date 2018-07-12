@@ -30,7 +30,20 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync($"You have {account.BanCount} drops and {account.BanTime} Remaining");
 		}
 
+		[Command("DevDrop")]
+		public async Task DevDrop(IGuildUser user)
+		{
+			if (Context.User.Id != 253313886466473997) return;
+		
+			var userAccount = UserAccounts.GetAccount((SocketUser)user);
+			userAccount.BanCount++;
+			UserAccounts.SaveAccounts();
+			var role = user.Guild.Roles.FirstOrDefault(x => x.Name.ToString() == "Being Dropped Out of a Helicopter");
+			await user.AddRoleAsync(role);
+			await Context.Channel.SendMessageAsync($"[Developer] Dropping {user.Username} from the helicopter");
+		}
 		[Command("Drop")]
+		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task Drop(IGuildUser user)
 		{
 			var userAccount = UserAccounts.GetAccount((SocketUser)user);
@@ -38,9 +51,10 @@ namespace HeliBot.Modules
 			UserAccounts.SaveAccounts();
 			var role = user.Guild.Roles.FirstOrDefault(x => x.Name.ToString() == "Being Dropped Out of a Helicopter");
 			await user.AddRoleAsync(role);
+			await Context.Channel.SendMessageAsync($"Dropping {user.Username} from the helicopter");
 		}
-
 		[Command("Land")]
+		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task Land(IGuildUser user)
 		{
 			var userAccount = UserAccounts.GetAccount((SocketUser)user);
@@ -48,9 +62,19 @@ namespace HeliBot.Modules
 			await user.RemoveRoleAsync(role);
 		}
 
-		[Command("Echo")]
+		[Command("DevLand")]
+		public async Task DevLand(IGuildUser user)
+		{
+			if (Context.User.Id != 253313886466473997) return;
+			var userAccount = UserAccounts.GetAccount((SocketUser)user);
+			var role = user.Guild.Roles.FirstOrDefault(x => x.Name.ToString() == "Being Dropped Out of a Helicopter");
+			await user.RemoveRoleAsync(role);
+		}
+
+		[Command("DevEcho")]
 		public async Task Echo([Remainder]string message)
 		{
+			if (Context.User.Id != 253313886466473997) return;
 			var embed = new EmbedBuilder();
 			embed.WithTitle("Echo");
 			embed.WithDescription(message);
@@ -58,9 +82,10 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync("", false, embed);
 		}
 
-		[Command("Pick")]
+		[Command("DevPick")]
 		public async Task Pick([Remainder]string message)
 		{
+			if (Context.User.Id != 253313886466473997) return;
 			string[] options = message.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
 			Random rand = new Random();
@@ -97,9 +122,10 @@ namespace HeliBot.Modules
 			return user.Roles.Contains(targetRole);
 		}
 
-		[Command("data")]
+		[Command("DevData")]
 		public async Task GetData()
 		{
+			if (Context.User.Id != 253313886466473997) return;
 			await Context.Channel.SendMessageAsync($"Data has {DataStorage.GetPairsCount()} pairs");
 			DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "theCount" + DataStorage.GetPairsCount());
 		}
