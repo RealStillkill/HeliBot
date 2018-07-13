@@ -5,7 +5,6 @@ Helibot is an automatic moderation bot that will Chat Ban users who use certain 
 This is my first sizable c# project so things are bound to be buggy and/or broken and/or unoptimised.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process:
     As of right now, Helibot must be run from the Visual Studio debugger due to the limitations of the Discord.Net API library, which requires the project be a .NET Core rather than Framework
     Helibot will be migrated to Core as soon as possible. Keep an eye on the Changelog and for future commits to this repository
