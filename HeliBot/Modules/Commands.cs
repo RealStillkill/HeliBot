@@ -53,13 +53,13 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync($"{Context.User.Username} has added the phrase '{word} to the banned phrases list");
 		}
 
-		[Command("(BannedPhrases")]
+		[Command("BannedPhrases")]
 		public async Task BannedPhrases()
 		{
 			await Context.Channel.SendMessageAsync(string.Empty, false, Misc.GetBannedPhraseEmbed());
 		}
 
-		[Command("(DevAddPhrase")]
+		[Command("DevAddPhrase")]
 		public async Task DevAddPhrase([Remainder]string message)
 		{
 			if (UserIsDeveloper((SocketGuildUser)Context.User) != true)
@@ -70,7 +70,7 @@ namespace HeliBot.Modules
 			Handlers.AddNewWord(word);
 			await Context.Channel.SendMessageAsync($"{Context.User.Username} has added the phrase '{word} to the banned phrases list");
 		}
-		[Command("(DevDrop")]
+		[Command("DevDrop")]
 		public async Task DevDrop(IGuildUser user, [Remainder]string reason)
 		{
 			if (Context.User.Id != 253313886466473997) return;
@@ -82,7 +82,7 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync(string.Empty, false, Misc.CreateHeliDropEmbed(user.Username, Context.User.Username, false, string.Empty, reason));
 		}
 
-		[Command("(DevLand")]
+		[Command("DevLand")]
 		public async Task DevLand(IGuildUser user)
 		{
 			var userAccount = UserAccounts.GetAccount((SocketUser)user);
@@ -91,7 +91,13 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync(string.Empty, false, Misc.CreateHeliLandEmbed(user.Username, Context.User.Username));
 		}
 
-		[Command("(Drop")]
+		[Command("DevIntroduction")]
+		public async Task DevIntro()
+		{
+			await Context.Channel.SendMessageAsync("", false, Misc.CreateIntroEmbed());
+		}
+
+		[Command("Drop")]
 		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task Drop(IGuildUser user, [Remainder]string reason)
 		{
@@ -121,13 +127,13 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync($"Data has {DataStorage.GetPairsCount()} pairs");
 			DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "theCount" + DataStorage.GetPairsCount());
 		}
-		[Command("(Help")]
+		[Command("Help")]
 		public async Task Help()
 		{
 			await Context.Channel.SendMessageAsync(string.Empty, false, Misc.CreateHelpEmbed((SocketGuildUser)Context.User));
 		}
 
-		[Command("(Land")]
+		[Command("Land")]
 		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task Land(IGuildUser user)
 		{
@@ -138,7 +144,7 @@ namespace HeliBot.Modules
 
 		}
 
-		[Command("(MyStats")]
+		[Command("MyStats")]
 		public async Task MyStats(IGuildUser user)
 		{
 			var account = UserAccounts.GetAccount((SocketUser)user);
@@ -162,7 +168,7 @@ namespace HeliBot.Modules
 			await Context.Channel.SendMessageAsync(string.Empty, false, embed);
 		}
 
-		[Command("(Ping")]
+		[Command("Ping")]
 		public async Task Ping()
 		{
 			var before = System.Environment.TickCount;
@@ -175,7 +181,7 @@ namespace HeliBot.Modules
 			});
 		}
 
-		[Command("(Secret")]
+		[Command("Secret")]
 		public async Task Secret([Remainder]string arg = "")
 		{
 			//if (!UserIsModerator((SocketGuildUser)Context.User)) return;

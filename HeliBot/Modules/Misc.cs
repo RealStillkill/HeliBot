@@ -112,6 +112,23 @@ namespace HeliBot.Modules
 			return FieldBuilder;
 		}
 
+		public static Embed CreateIntroEmbed()
+		{
+			EmbedBuilder IntroEmbed = new EmbedBuilder();
+			IntroEmbed.AddField(CreateEmbedField(false, "Function:", "Ban people who use certain banned words"));
+			IntroEmbed.AddField(CreateEmbedField(false, "Devoped by:", "Stillkill"));
+			IntroEmbed.AddField(CreateEmbedField(false, "List of Commands", "Type //Help"));
+			IntroEmbed.AddField(CreateEmbedField(false, "Command Prefixes", "'//' or '@helibot'"));
+			IntroEmbed.AddField(CreateEmbedField(false, "About Helibot:", "Helibot is written in C# using the Discord.net 1.0.2 API"));
+			IntroEmbed.AddField(CreateEmbedField(false, "Source:", "https://github.com/RealStillkill/HeliBot"));
+			IntroEmbed.WithTitle("Hello, My name is Helibot");
+			IntroEmbed.WithDescription("Allow me to tell you a little about my self!");
+			IntroEmbed.WithColor(0, 0, 255);
+			IntroEmbed.WithThumbnailUrl(HelibotImageURL);
+			IntroEmbed.WithFooter("I'll always be watching", HelibotImageURL);
+			return IntroEmbed.Build();
+		}
+
 		public static Embed CreateHelpEmbed(SocketGuildUser user)
 		{
 			//max of 20 commands. If command ammount excedes 20, create and send a new embed.
