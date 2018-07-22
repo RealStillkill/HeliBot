@@ -37,6 +37,12 @@ namespace HeliBot.Core.UserAccounts
 			return GetAccount(user).BanCount;
 		}
 
+		public static void AddAccountBanCount(SocketUser user)
+		{
+			var account = GetAccount(user);
+			account.BanCount += 1;
+		}
+
 		public static UserAccount GetAccount(SocketUser user)
 		{
 			return GetOrCreateAccount(user.Id);

@@ -1,0 +1,11 @@
+C:\Users\still\source\repos\HeliBot\HeliBot\bin\Debug\netcoreapp2.0\HeliBot.deps.json
+C:\Users\still\source\repos\HeliBot\HeliBot\bin\Debug\netcoreapp2.0\HeliBot.runtimeconfig.json
+C:\Users\still\source\repos\HeliBot\HeliBot\bin\Debug\netcoreapp2.0\HeliBot.runtimeconfig.dev.json
+C:\Users\still\source\repos\HeliBot\HeliBot\bin\Debug\netcoreapp2.0\HeliBot.dll
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.csprojAssemblyReference.cache
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.csproj.CoreCompileInputs.cache
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.AssemblyInfoInputs.cache
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.AssemblyInfo.cs
+C:\Users\still\source\repos\HeliBot\HeliBot\bin\Debug\netcoreapp2.0\HeliBot.pdb
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.dll
+C:\Users\still\source\repos\HeliBot\HeliBot\obj\Debug\netcoreapp2.0\HeliBot.pdb

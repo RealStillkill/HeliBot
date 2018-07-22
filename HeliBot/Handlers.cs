@@ -1,22 +1,31 @@
-﻿using Discord.Commands;
-using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System;
+using Discord;
 using System.IO;
-using HeliBot.Core.UserAccounts;
+using System.Linq;
+using HeliBot.Modules;
+using Discord.Commands;
 using HeliBot.Core.Bans;
+using System.Reflection;
+using Discord.WebSocket;
+using System.Threading.Tasks;
+using HeliBot.Core.UserAccounts;
 
 namespace HeliBot
 {
-	class CommandHandler
+	class Handlers
 	{
 		DiscordSocketClient _client;
 		CommandService _CMDservice;
-		readonly string[] bannedWords = { "Patootie", "owo", "UwU" };
+		//public static string[] badWords = new string[] { "uwu", "owo", "patootie" };
+		public static string[] badWords = File.ReadAllLines(@"BannedWords.txt");
+
+
+		public static void AddNewWord(string word)
+		{
+			if (word == null) return;
+			badWords.Append(word.ToLower());
+			File.AppendAllText(@"BannedWords.txt", word.ToLower());
+		}
 
 		public async Task InitializeAsync(DiscordSocketClient client)
 		{
@@ -39,7 +48,7 @@ namespace HeliBot
 			{
 				var result = await _CMDservice.ExecuteAsync(context, argPos);
 				//throw error in debug console
-				if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
+				if(!result.IsSuccess && result.Error != CommandError.UnknownCommand)
 				{
 					Console.WriteLine(result.ErrorReason);
 				}
@@ -55,19 +64,43 @@ namespace HeliBot
 
 		private async Task BannedWordsDrop(SocketMessage msg)
 		{
-			var message = msg as SocketUserMessage;
-			var author = msg.Author as SocketGuildUser;
-			var user = author as SocketUser;
-			string[] badWords = File.ReadAllLines(@"BannedWords.txt");
-			if (badWords.Any(msg.Content.Contains))
+			SocketUserMessage message = msg as SocketUserMessage;
+			string msgsent = message.ToString().ToLower();
+			SocketGuildUser author = message.Author as SocketGuildUser;
+			SocketUser user = author as SocketUser;
+			//string[] badWords = File.ReadAllLines(@"BannedWords.txt");
+			if (badWords.Any(msgsent.Contains))
 			{
+				Console.WriteLine("Banned Phrase Detected!");
+				Console.WriteLine($"User: {msg.Author.Username}");
+				Console.WriteLine($"Phrase: {msg.Content}");
+				
 				//ban time constant represents 2 min, not 2 milliseconds. Make sure that the timer creation compensates
-				ulong banTime = UserAccounts.GetAccountBanCount(user) * 2;
+				UserAccounts.AddAccountBanCount(user);
+				ulong banTimeC = 300000 + UserAccounts.GetAccountBanCount(user) * 60000;
 				var role = author.Guild.Roles.FirstOrDefault(x => x.Name.ToString() == "Being Dropped Out of a Helicopter");
-				Bans.CreateUserBan(author.Id, banTime);
-				Console.WriteLine("Banned word detected");
-				await msg.Channel.SendMessageAsync("Dropped from the heli, faggot.");
+				Console.WriteLine("Dropping user...");
+				await author.AddRoleAsync(role);
+				await msg.Channel.SendMessageAsync("", false, Misc.CreateHeliDropEmbed(user.Username, "Helibot Automatic Detection Service", true, msg.ToString(), "Banned Word Detected", banTimeC));
+				Console.WriteLine("User Dropped!");
+				Console.WriteLine("Initializing AutoLanding Service");
+				DropTimer Countdown = new DropTimer();
+				Countdown.SetComponents(author, message, banTimeC);
+				Countdown.InitTimer();
+				Countdown.TimerElapsed += CountDownElapsed;
+				//Countdown.ClockElapsed += CountDownClockElapsed;
+				Console.WriteLine("AutoLanding Service initialized.");
 			}
+		}
+
+		private async void CountDownElapsed(object source, TimerEventArgs e)
+		{
+			SocketUserMessage message = e.GetEventInfoMessage();
+			SocketGuildUser User = e.GetEventInfoUser();
+			var role = User.Guild.Roles.FirstOrDefault(x => x.Name.ToString() == "Being Dropped Out of a Helicopter");
+			await User.RemoveRoleAsync(role);
+			Embed UndropEmbed = Misc.CreateHeliLandEmbed(User.Username, "Helibot Automatic Detection Service");
+			var msg = await message.Channel.SendMessageAsync("", false, UndropEmbed);
 		}
 	}
 }

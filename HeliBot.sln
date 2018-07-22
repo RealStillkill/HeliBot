@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeliBot", "HeliBot\HeliBot.csproj", "{062CA501-73BB-48FA-9DD5-85206A52F69E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeliBot", "HeliBot\HeliBot.csproj", "{2054EC14-BA89-4212-ADA4-07220D40CAE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{062CA501-73BB-48FA-9DD5-85206A52F69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{062CA501-73BB-48FA-9DD5-85206A52F69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{062CA501-73BB-48FA-9DD5-85206A52F69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{062CA501-73BB-48FA-9DD5-85206A52F69E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2054EC14-BA89-4212-ADA4-07220D40CAE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2054EC14-BA89-4212-ADA4-07220D40CAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2054EC14-BA89-4212-ADA4-07220D40CAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2054EC14-BA89-4212-ADA4-07220D40CAE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8F31EA28-0297-4E42-B605-97518D297395}
+		SolutionGuid = {7DE69B9D-8EB4-44DE-90CC-FCCF6525BD19}
 	EndGlobalSection
 EndGlobal

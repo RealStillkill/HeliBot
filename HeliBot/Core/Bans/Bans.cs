@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Timers;
 namespace HeliBot.Core.Bans
 {
 	public class Bans
@@ -23,21 +23,22 @@ namespace HeliBot.Core.Bans
 			}
 		}
 
-		private static Ban GetOrCreateBan(ulong id, ulong banTime)
+		private static Ban GetOrCreateBan(ulong id, ulong banTime, Timer banTimer)
 		{
 			var result = from a in BanList where a.UserID == id select a;
 			var account = result.FirstOrDefault();
-			if (account == null) account = CreateUserBan(id, banTime);
+			if (account == null) account = CreateUserBan(id, banTime, banTimer);
 			return account;
 		}
 
-		public static Ban CreateUserBan(ulong id, ulong banTime)
+		public static Ban CreateUserBan(ulong id, ulong banTime, Timer banTimer)
 		{
 			var newBan = new Ban()
 			{
 				UserID = id,
 				BanTimeRemaining = banTime,
-				BanID = DateTime.UtcNow.ToString()
+				BanID = DateTime.UtcNow.ToString(),
+				BanTimer = banTimer
 			};
 			BanList.Add(newBan);
 			SaveBans();
@@ -46,7 +47,7 @@ namespace HeliBot.Core.Bans
 
 		public static Ban GetBan(Ban ban)
 		{
-			return GetOrCreateBan(ban.UserID, ban.BanTimeRemaining);
+			return GetOrCreateBan(ban.UserID, ban.BanTimeRemaining, ban.BanTimer);
 		}
 
 		public static void SaveBans()
